@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="playerBtn" width="202" height="64" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="playerBtn" source="btn_bg_green_png" anchorOffsetX="0" anchorOffsetY="0" height="70" left="0" right="0" verticalCenter="3"/>
+	<e:Label text="单人闯关" verticalCenter="0" horizontalCenter="0"/>
+</e:Skin>
