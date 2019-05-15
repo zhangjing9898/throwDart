@@ -57,6 +57,7 @@ class buttons extends egret.Sprite {
         this.addChild(this.txt);
         // 按钮点击效果
         this.img.touchEnabled = true;
+        this.txt.touchEnabled = true;
         this.addListener(egret.TouchEvent.TOUCH_BEGIN, 2);
         this.addListener(egret.TouchEvent.TOUCH_END || egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, -2);
     }

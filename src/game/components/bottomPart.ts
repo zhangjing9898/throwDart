@@ -2,10 +2,12 @@
  * 首页底部
  */
 
-class bottom extends egret.Sprite {
+class bottomPart extends egret.Sprite {
+    
     constructor() {
         super();
     }
+    
     public static FRIENDS_RANK = 'friendsrank'
     public static GROUP_RANK = 'grouprank'
     public static WORLD_RANK = 'worldrank'
@@ -23,10 +25,10 @@ class bottom extends egret.Sprite {
         this.bg = bg;
         this.addChild(this.bg);
 
-        this.imgPart('b1_png', 53, 52, 30, '好友排行', 20, bottom.FRIENDS_RANK);
-        this.imgPart('b2_png', 47, 46, 130, '群内排行', 120, bottom.FRIENDS_RANK);
-        this.imgPart('b4_png', 60, 48, 230, '皮肤', 235, bottom.SKIN);
-        this.imgPart('like_png', 70, 65, 330, '点赞', 331, bottom.ZAN, true);
+        this.imgPart('b1_png', 53, 52, 30, '好友排行', 20, bottomPart.FRIENDS_RANK);
+        this.imgPart('b2_png', 47, 46, 130, '群内排行', 120, bottomPart.FRIENDS_RANK);
+        this.imgPart('b4_png', 60, 48, 230, '皮肤', 235, bottomPart.SKIN);
+        this.imgPart('like_png', 70, 65, 330, '点赞', 331, bottomPart.ZAN, true);
     }
 
     private imgPart(imgRES: string, width: number, height: number, x: number, text: string, tX: number, eventName: string, isWX: boolean = false, tY: number = 60, y: number = 20, img: egret.Bitmap = new egret.Bitmap, txt: egret.TextField = new egret.TextField) {

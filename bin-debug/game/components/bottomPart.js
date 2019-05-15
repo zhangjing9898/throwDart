@@ -11,27 +11,27 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var bottom = (function (_super) {
-    __extends(bottom, _super);
-    function bottom() {
+var bottomPart = (function (_super) {
+    __extends(bottomPart, _super);
+    function bottomPart() {
         var _this = _super.call(this) || this;
         _this.height = 100;
         _this._width = 1000;
         return _this;
     }
-    bottom.prototype.init = function () {
+    bottomPart.prototype.init = function () {
         var bg = new egret.Shape();
         bg.graphics.beginFill(0x000000, .5);
         bg.graphics.drawRect(0, 0, this._width, this.height);
         bg.graphics.endFill();
         this.bg = bg;
         this.addChild(this.bg);
-        this.imgPart('b1_png', 53, 52, 30, '好友排行', 20, bottom.FRIENDS_RANK);
-        this.imgPart('b2_png', 47, 46, 130, '群内排行', 120, bottom.FRIENDS_RANK);
-        this.imgPart('b4_png', 60, 48, 230, '皮肤', 235, bottom.SKIN);
-        this.imgPart('like_png', 70, 65, 330, '点赞', 331, bottom.ZAN, true);
+        this.imgPart('b1_png', 53, 52, 30, '好友排行', 20, bottomPart.FRIENDS_RANK);
+        this.imgPart('b2_png', 47, 46, 130, '群内排行', 120, bottomPart.FRIENDS_RANK);
+        this.imgPart('b4_png', 60, 48, 230, '皮肤', 235, bottomPart.SKIN);
+        this.imgPart('like_png', 70, 65, 330, '点赞', 331, bottomPart.ZAN, true);
     };
-    bottom.prototype.imgPart = function (imgRES, width, height, x, text, tX, eventName, isWX, tY, y, img, txt) {
+    bottomPart.prototype.imgPart = function (imgRES, width, height, x, text, tX, eventName, isWX, tY, y, img, txt) {
         var _this = this;
         if (isWX === void 0) { isWX = false; }
         if (tY === void 0) { tY = 60; }
@@ -66,11 +66,11 @@ var bottom = (function (_super) {
             //   if (isWX) platform.openMini(miniObj);
         }, this);
     };
-    bottom.FRIENDS_RANK = 'friendsrank';
-    bottom.GROUP_RANK = 'grouprank';
-    bottom.WORLD_RANK = 'worldrank';
-    bottom.SKIN = 'skin';
-    bottom.ZAN = 'ZAN';
-    return bottom;
+    bottomPart.FRIENDS_RANK = 'friendsrank';
+    bottomPart.GROUP_RANK = 'grouprank';
+    bottomPart.WORLD_RANK = 'worldrank';
+    bottomPart.SKIN = 'skin';
+    bottomPart.ZAN = 'ZAN';
+    return bottomPart;
 }(egret.Sprite));
-__reflect(bottom.prototype, "bottom");
+__reflect(bottomPart.prototype, "bottomPart");

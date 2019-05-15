@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="startPanelSkin" width="640" height="1123.88" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+<e:Skin class="startPanelSkin" width="414" height="736" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="16ab538d3a9" ></w:Config>
-	<e:Image source="1_jpg" anchorOffsetX="0" left="0" top="0" width="730.42" anchorOffsetY="0" height="1181.7" alpha="0.8" locked="true"/>
-	<e:Image source="logo_png" verticalCenter="-310" anchorOffsetX="0" width="469.09" anchorOffsetY="0" height="358.21" horizontalCenter="0" locked="true"/>
+	<e:Image source="1_jpg" anchorOffsetX="0" left="0" top="0" width="414" anchorOffsetY="0" height="736" alpha="0.8"/>
+	<e:Image source="logo_png" x="46" y="53" anchorOffsetX="0" width="322" anchorOffsetY="0" height="247"/>
 </e:Skin>

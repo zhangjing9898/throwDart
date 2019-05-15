@@ -30,8 +30,6 @@
         "resource/eui_skins/ToggleSwitchSkin.exml",
         "resource/eui_skins/VScrollBarSkin.exml",
         "resource/eui_skins/VSliderSkin.exml",
-        "resource/skins/skin_item/crazyBtn.exml",
-        "resource/skins/skin_item/playerBtn.exml",
         "resource/skins/startPanel.exml"
     ],
     "path": "resource/default.thm.json"

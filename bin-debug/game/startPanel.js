@@ -11,7 +11,9 @@ r.prototype = e.prototype, t.prototype = new r();
 var startPanel = (function (_super) {
     __extends(startPanel, _super);
     function startPanel() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.bottomPart = new bottomPart();
+        return _this;
     }
     startPanel.prototype.partAdded = function (partName, instance) {
         _super.prototype.partAdded.call(this, partName, instance);
@@ -21,13 +23,29 @@ var startPanel = (function (_super) {
         this.initButtons();
     };
     startPanel.prototype.initButtons = function () {
-        var _a = this, startBtn = _a.startBtn, startPK = _a.startPK;
+        var _a = this, stage = _a.stage, startBtn = _a.startBtn, startPK = _a.startPK, bottomPart = _a.bottomPart;
+        // 创建模式按钮
         startBtn = new buttons();
         this.addChild(startBtn);
         startBtn.init(1, '单人闯关');
+        startBtn.x = -startBtn.width;
+        startBtn.y = 400;
+        egret.Tween.get(startBtn).to({
+            x: stage.stageWidth / 2 - startBtn.width / 2
+        }, 500, egret.Ease.bounceOut);
         startPK = new buttons();
         this.addChild(startPK);
         startPK.init(4, '疯狂模式');
+        startPK.x = stage.stageWidth;
+        startPK.y = 500;
+        egret.Tween.get(startPK).to({
+            x: stage.stageWidth / 2 - startPK.width / 2
+        }, 500, egret.Ease.bounceOut);
+        this.addChild(bottomPart);
+        bottomPart.init();
+        bottomPart.y = stage.stageHeight;
+        egret.Tween.get(bottomPart).to({ y: stage.stageHeight - bottomPart.height }, 500, egret.Ease.bounceOut);
+        // TODO: 监听事件
     };
     return startPanel;
 }(eui.Component));
