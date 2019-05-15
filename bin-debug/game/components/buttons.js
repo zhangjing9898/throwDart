@@ -1,24 +1,30 @@
 /**
  * 创建不同颜色的button
  */
-
-class buttons extends egret.Sprite {
-
-    constructor() {
-        super();
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
+var buttons = (function (_super) {
+    __extends(buttons, _super);
+    function buttons() {
+        return _super.call(this) || this;
     }
-
-    private img: egret.Bitmap;
-    private txt: egret.TextField;
-    private width: number;
-    private height: number;
-
-    private setImg(img: string, color: number) {
+    buttons.prototype.setImg = function (img, color) {
         this.img.texture = RES.getRes(img);
         this.txt.strokeColor = color;
-    }
-
-    public init(type: number = 1, text: string, size: number = 24, width: number = 180, height: number = 64) {
+    };
+    buttons.prototype.init = function (type, text, size, width, height) {
+        if (type === void 0) { type = 1; }
+        if (size === void 0) { size = 24; }
+        if (width === void 0) { width = 180; }
+        if (height === void 0) { height = 64; }
         this.img = new egret.Bitmap();
         this.txt = new egret.TextField();
         this.width = width;
@@ -59,14 +65,16 @@ class buttons extends egret.Sprite {
         this.img.touchEnabled = true;
         this.addListener(egret.TouchEvent.TOUCH_BEGIN, 2);
         this.addListener(egret.TouchEvent.TOUCH_END || egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, -2);
-    }
-
-    private addListener(name: string, num: number) {
-        this.img.addEventListener(name, () => {
-            this.img.x += num;
-            this.img.y += num;
-            this.txt.x += num;
-            this.txt.y += num;
+    };
+    buttons.prototype.addListener = function (name, num) {
+        var _this = this;
+        this.img.addEventListener(name, function () {
+            _this.img.x += num;
+            _this.img.y += num;
+            _this.txt.x += num;
+            _this.txt.y += num;
         }, this);
-    }
-}
+    };
+    return buttons;
+}(egret.Sprite));
+__reflect(buttons.prototype, "buttons");
