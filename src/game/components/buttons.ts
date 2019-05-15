@@ -10,8 +10,8 @@ class buttons extends egret.Sprite {
 
     private img: egret.Bitmap;
     private txt: egret.TextField;
-    private width: number;
-    private height: number;
+    public width: number;
+    public height: number;
 
     private setImg(img: string, color: number) {
         this.img.texture = RES.getRes(img);
