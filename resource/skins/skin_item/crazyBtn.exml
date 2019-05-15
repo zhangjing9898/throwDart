@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="crazyBtn" width="202" height="64" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="playerBtn" anchorOffsetX="0" anchorOffsetY="0" height="70" left="0" right="0" verticalCenter="3" source="btn_bg_pink_png"/>
-	<e:Label text="疯狂模式" verticalCenter="0" horizontalCenter="0"/>
-</e:Skin>

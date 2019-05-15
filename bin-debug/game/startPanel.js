@@ -18,6 +18,16 @@ var startPanel = (function (_super) {
     };
     startPanel.prototype.childrenCreated = function () {
         _super.prototype.childrenCreated.call(this);
+        this.initButtons();
+    };
+    startPanel.prototype.initButtons = function () {
+        var _a = this, startBtn = _a.startBtn, startPK = _a.startPK;
+        startBtn = new buttons();
+        this.addChild(startBtn);
+        startBtn.init(1, '单人闯关');
+        startPK = new buttons();
+        this.addChild(startPK);
+        startPK.init(4, '疯狂模式');
     };
     return startPanel;
 }(eui.Component));

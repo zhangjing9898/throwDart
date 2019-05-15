@@ -16,6 +16,7 @@
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/game/sceneManager.js",
 		"bin-debug/game/startPanel.js",
+		"bin-debug/game/components/bottom.js",
 		"bin-debug/game/components/buttons.js"
 	]
 }
