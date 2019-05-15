@@ -9,7 +9,7 @@ declare interface Platform {
     getUserInfo(): Promise<any>;
 
     login(): Promise<any>
-
+    openMini(obj: any): Promise<any>
 }
 
 class DebugPlatform implements Platform {
@@ -19,6 +19,7 @@ class DebugPlatform implements Platform {
     async login() {
 
     }
+    async openMini(obj: any) {}
 }
 
 

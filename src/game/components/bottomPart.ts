@@ -7,7 +7,7 @@ class bottomPart extends egret.Sprite {
     constructor() {
         super();
     }
-    
+
     public static FRIENDS_RANK = 'friendsrank'
     public static GROUP_RANK = 'grouprank'
     public static WORLD_RANK = 'worldrank'
@@ -45,8 +45,7 @@ class bottomPart extends egret.Sprite {
         img.touchEnabled = true;
         img.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.dispatchEventWith(eventName);
-            //   TODO: 添加wx相关文件
-            //   if (isWX) platform.openMini(miniObj);
+            if (isWX) platform.openMini(miniObj);
         }, this);
 
         txt.text = text;
@@ -58,7 +57,7 @@ class bottomPart extends egret.Sprite {
         txt.touchEnabled = true;
         txt.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.dispatchEventWith(eventName);
-            //   if (isWX) platform.openMini(miniObj);
+            if (isWX) platform.openMini(miniObj);
         }, this);
     }
 }
