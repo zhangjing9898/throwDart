@@ -7,7 +7,8 @@
 declare interface Platform {
 
     getUserInfo(): Promise<any>;
-
+    setData(data: any, func? : any): Promise<any>;
+    getData(key: any, func? : any): Promise<any>;
     login(): Promise<any>
     openMini(obj: any): Promise<any>
 }
@@ -18,6 +19,14 @@ class DebugPlatform implements Platform {
     }
     async login() {
 
+    }
+    async setData(data: any, func: any) {
+        window.localStorage.setItem(data.key, data.value);
+        return func ? func(data) : data;
+    }
+    async getData(key: any, func: any) {
+        const data = window.localStorage.getItem(key);
+        return func ? func(data) : data;
     }
     async openMini(obj: any) {}
 }

@@ -1,5 +1,7 @@
 class startPanel extends eui.Component implements eui.UIComponent {
 
+	public static GAME_START_1: string = 'gamestart1'
+  	public static GAME_START_2: string = 'gamestart2'
 	private startBtn: buttons;
 	private startPK: buttons;
 	private bottomPart = new bottomPart();
@@ -15,10 +17,10 @@ class startPanel extends eui.Component implements eui.UIComponent {
 
 	protected childrenCreated(): void {
 		super.childrenCreated();
-		this.initButtons();
+		this.init();
 	}
 
-	private initButtons() {
+	private init() {
 		let { stage, startBtn, startPK, bottomPart } = this;
 		// 创建模式按钮
 		startBtn = new buttons();
@@ -29,6 +31,9 @@ class startPanel extends eui.Component implements eui.UIComponent {
 		egret.Tween.get(startBtn).to({
 			x: stage.stageWidth / 2 - startBtn.width / 2
 		}, 500, egret.Ease.bounceOut);
+		startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			this.touchTap(1);
+		}, this);
 
 		startPK = new buttons();
 		this.addChild(startPK);
@@ -38,6 +43,9 @@ class startPanel extends eui.Component implements eui.UIComponent {
 		egret.Tween.get(startPK).to({
 			x: stage.stageWidth / 2 - startPK.width / 2
 		}, 500, egret.Ease.bounceOut);
+		startPK.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			this.touchTap(2);
+		}, this);
 
 		this.addChild(bottomPart);
 		bottomPart.init();
@@ -46,4 +54,15 @@ class startPanel extends eui.Component implements eui.UIComponent {
 		// TODO: 监听事件
 	}
 
+	private touchTap(mode: number = 1) {
+		// 1: easy mode; 2: crazy mode
+		switch(mode) {
+			case 1:
+				this.dispatchEventWith(startPanel.GAME_START_1);
+				break;
+			case 2:
+				this.dispatchEventWith(startPanel.GAME_START_2);
+				break;
+		}
+	}
 }
