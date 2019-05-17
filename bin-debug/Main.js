@@ -166,13 +166,15 @@ var Main = (function (_super) {
         this.startPanel = new startPanel();
         this.addChild(this.startPanel);
         this.startPanel.addEventListener(startPanel.GAME_START_1, this.produceGamePanel, this);
-        this.startPanel.addEventListener(startPanel.GAME_START_2, this.produceGamePanel, this);
+        // this.startPanel.addEventListener(startPanel.GAME_START_2, this.produceGamePanel, this);
     };
     Main.prototype.produceGamePanel = function () {
+        this.gamePanel = new gamePanel();
         this.startPanel.removeEventListener(startPanel.GAME_START_1, this.produceGamePanel, this);
         this.startPanel.removeEventListener(startPanel.GAME_START_2, this.produceGamePanel, this);
         this.removeChild(this.startPanel);
         this.addChild(this.gamePanel);
+        this.gamePanel.start(1);
     };
     return Main;
 }(eui.UILayer));

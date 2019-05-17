@@ -49,9 +49,34 @@ var gamePanel = (function (_super) {
     function gamePanel() {
         var _this = _super.call(this) || this;
         _this.skin = 1;
+        _this.dartW = 21;
+        _this.dartH = 100;
+        /**
+         * 通过一关，重新random木桩上的飞镖
+         */
+        _this.level = 1;
+        _this.mode = 1;
+        _this.dartNum = 9;
         _this.initGame();
         return _this;
     }
+    gamePanel.prototype.start = function (mode) {
+        if (mode === void 0) { mode = 1; }
+        // 1: easy 2:crazy
+        var mat = [];
+        mode === 1 ? mat = [1, 0, 0, 0, 0,
+            0, 1, 0, 0, 0,
+            0, 0, 1, 0, 0,
+            0, 0, 0, 1, 0,]
+            :
+                mat = [
+                    -1, 0, 0, 0, 255,
+                    0, -1, 0, 0, 255,
+                    0, 0, -1, 0, 255,
+                    0, 0, 0, 1, 0,
+                ];
+        this.bgimg.filters = [new egret.ColorMatrixFilter(mat)];
+    };
     // protected和private类似，但是，protected成员在派生类中可以访问
     // async: 代码上的顺序执行，行为上的异步执行
     gamePanel.prototype.initGame = function () {
@@ -80,7 +105,7 @@ var gamePanel = (function (_super) {
                         // 生成对应bg
                         switch (this.skin) {
                             case 1:
-                                this.skinConf('4.jpg', 0.4, 'timber_png', 200);
+                                this.skinConf('4_jpg', 0.4, 'timber_png', 200);
                                 break;
                             case 2:
                                 this.skinConf('2_jpg', 0.7, 'eye_png', 280);
@@ -88,6 +113,8 @@ var gamePanel = (function (_super) {
                         }
                         this.timber.x = stageW / 2;
                         this.timber.y = 230;
+                        this.createText();
+                        this.createDart();
                         return [2 /*return*/];
                 }
             });
@@ -103,6 +130,55 @@ var gamePanel = (function (_super) {
         this.timber.height = timberW;
         this.timber.anchorOffsetX = timberW / 2;
         this.timber.anchorOffsetY = timberW / 2;
+    };
+    gamePanel.prototype.createText = function () {
+        var shape = new egret.Shape();
+        shape.graphics.beginFill(0x2f1810, .8);
+        shape.graphics.drawRoundRect(-10, 10, 80, 30, 10);
+        shape.graphics.endFill();
+        this.addChild(shape);
+        var txt = new egret.TextField();
+        this.addChild(txt);
+        txt.x = 12;
+        txt.y = 17;
+        txt.textColor = 0xffffff;
+        txt.textAlign = egret.HorizontalAlign.CENTER;
+        txt.size = 14;
+        this.txt = txt;
+        this.updateLevel();
+    };
+    // 关卡更新
+    gamePanel.prototype.updateLevel = function () {
+        this.txt.text = "\u7B2C 1 \u5173";
+    };
+    // 生成飞镖
+    gamePanel.prototype.createDart = function () {
+        var stage = egret.MainContext.instance.stage;
+        var dart = this.createBitmapByName('kunai_png');
+        this.addChild(dart);
+        dart.width = this.dartW;
+        dart.height = this.dartH;
+        dart.x = stage.width / 2 - 10;
+        dart.y = stage.height - 170;
+        this.randomDart();
+    };
+    gamePanel.prototype.randomDart = function () {
+        if (this.level === 1)
+            return;
+        switch (this.mode) {
+            case 1:
+                // 简单模式，每关随机增加
+                var random = Math.round(Math.random() * this.level);
+                if (random >= this.level / 2)
+                    this.dartNum -= Math.floor(Math.random() * this.level / 2 + 1);
+                // TODO: rotate
+                break;
+            case 2:
+                // 疯狂模式，每过一关，木桩上的飞镖多一把
+                for (var i = 1; i < this.level; i++) {
+                }
+                break;
+        }
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
