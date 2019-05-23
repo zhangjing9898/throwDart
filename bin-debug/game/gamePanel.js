@@ -123,6 +123,7 @@ var gamePanel = (function (_super) {
                         this.timber.y = 230;
                         this.createText();
                         this.createDart();
+                        this.startAnimation();
                         this.dartNumArea();
                         return [2 /*return*/];
                 }
@@ -164,9 +165,6 @@ var gamePanel = (function (_super) {
         this.addChild(dart);
         this.drawText(50, GameUtil.getStageHeight() - 80, 0xffffff, 14, egret.HorizontalAlign.LEFT, true);
     };
-    gamePanel.prototype.updateDartNum = function () {
-        this.dartNumTip.text = "x " + this.dartNum;
-    };
     gamePanel.prototype.skinConf = function (res, alpha, timberRes, timberW) {
         var bgimg = this.bgimg;
         bgimg.texture = RES.getRes(res);
@@ -196,7 +194,7 @@ var gamePanel = (function (_super) {
     };
     // 关卡更新
     gamePanel.prototype.updateLevel = function () {
-        this.txt.text = "\u7B2C 1 \u5173";
+        this.txt.text = "\u7B2C " + this.level + " \u5173";
     };
     // 生成飞镖
     gamePanel.prototype.createDart = function () {
@@ -265,6 +263,19 @@ var gamePanel = (function (_super) {
             time: time
         };
         this.insertRotare.push(obj);
+    };
+    /**
+     * 木桩初始动画
+     */
+    gamePanel.prototype.startAnimation = function () {
+        var _this = this;
+        console.log('1');
+        if (this.timberInterval)
+            clearInterval(this.timberInterval);
+        this.timber.rotation = 0;
+        this.timberInterval = setInterval(function () {
+            _this.timber.rotation += _this.rotations;
+        }, this.rate - this.rateOffset);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

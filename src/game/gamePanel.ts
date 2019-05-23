@@ -62,6 +62,7 @@ class gamePanel extends egret.Sprite {
 
         this.createText();
         this.createDart();
+        this.startAnimation();
         this.dartNumArea();
 
     }
@@ -110,10 +111,6 @@ class gamePanel extends egret.Sprite {
        this.drawText(50, GameUtil.getStageHeight()-80, 0xffffff, 14, egret.HorizontalAlign.LEFT, true);   
     }
 
-    private updateDartNum() {
-        this.dartNumTip.text = `x ${this.dartNum}`;
-    }
-
     private skinConf(res: string, alpha: number, timberRes: string, timberW: number) {
         let { bgimg } = this;
         bgimg.texture = RES.getRes(res);
@@ -145,7 +142,7 @@ class gamePanel extends egret.Sprite {
     }
     // 关卡更新
     private updateLevel() {
-        this.txt.text = `第 1 关`;
+        this.txt.text = `第 ${this.level} 关`;
     }
     private dart: egret.Bitmap;
     protected dartW: number = 21;
@@ -233,7 +230,18 @@ class gamePanel extends egret.Sprite {
         }
         this.insertRotare.push(obj);
     }
-
+    private timberInterval: number;
+    /**
+     * 木桩初始动画
+     */
+    private startAnimation(): void {
+        console.log('1');
+        if (this.timberInterval) clearInterval(this.timberInterval);
+        this.timber.rotation = 0;
+        this.timberInterval = setInterval(() => {
+            this.timber.rotation += this.rotations;
+        }, this.rate - this.rateOffset);
+    }
     /**
 	 * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
 	 * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
