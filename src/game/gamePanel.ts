@@ -1,4 +1,10 @@
 // 游戏界面
+interface itemObj {
+    id: number,
+    range: number[],
+    dart: egret.Bitmap,
+    time: number
+}
 class gamePanel extends egret.Sprite {
 
     private bgimg: egret.Bitmap;
@@ -56,8 +62,58 @@ class gamePanel extends egret.Sprite {
 
         this.createText();
         this.createDart();
+        this.dartNumArea();
 
     }
+    /**
+     * 绘制飞镖
+     * @param dart 
+     * @param width 
+     * @param height 
+     * @param x 
+     * @param y 
+     */
+    private drawDart(dart: egret.Bitmap, width: number, height: number, x: number, y: number) {
+        dart.width = width;
+        dart.height = height;
+        dart.x = x;
+        dart.y = y;
+    }
+    /**
+     * 绘制txt文本
+     * @param txt 
+     * @param x 
+     * @param y 
+     * @param color 
+     * @param size 
+     * @param align 
+     * @param callback 
+     */
+    private dartNumTip: egret.TextField;
+    private drawText(x:number, y:number, color: number, size: number, align: string, update: Boolean = false) {
+        const txt = new egret.TextField();
+        this.addChild(txt);
+        txt.x = x;
+        txt.y = y;
+        txt.textColor = color;
+        txt.textAlign = align;
+        txt.size = size;
+        if(update) txt.text = `x ${this.dartNum}`;
+    }
+    /**
+     * 绘制剩余飞镖数 框
+     */
+    private dartNumArea() {
+       const dart = this.createBitmapByName('kunai_png');
+       this.drawDart(dart, 10, 50, 30, GameUtil.getStageHeight()-100);
+       this.addChild(dart);
+       this.drawText(50, GameUtil.getStageHeight()-80, 0xffffff, 14, egret.HorizontalAlign.LEFT, true);   
+    }
+
+    private updateDartNum() {
+        this.dartNumTip.text = `x ${this.dartNum}`;
+    }
+
     private skinConf(res: string, alpha: number, timberRes: string, timberW: number) {
         let { bgimg } = this;
         bgimg.texture = RES.getRes(res);
@@ -104,6 +160,7 @@ class gamePanel extends egret.Sprite {
         dart.x = stage.width / 2 -10;
         dart.y = stage.height - 170;
         this.randomDart();
+        // TODO: 点击
     }
     /**
      * 通过一关，重新random木桩上的飞镖
@@ -118,15 +175,63 @@ class gamePanel extends egret.Sprite {
                 // 简单模式，每关随机增加
                 const random = Math.round(Math.random() * this.level);
                 if (random >= this.level / 2) this.dartNum -= Math.floor(Math.random()* this.level / 2 + 1);
-                // TODO: rotate
+                this.dartInThumb(random);
                 break;
             case 2:
                 // 疯狂模式，每过一关，木桩上的飞镖多一把
-                for (let i = 1; i < this.level; i++) {
-                    
-                }
+                this.dartInThumb(this.level);
                 break;
         }
+    }
+    /**
+     * 随机性 生成飞镖位置
+     */
+    private dartInThumb(length: number) {
+        for(let i = 1; i < length; i++) {
+            // 更加随机性 生成飞镖位置
+            let random = Math.floor(Math.random() * 180);
+            random = Math.random() < 0.5 ? random * -1 : random;
+            this.rotateThumb(random);
+        }
+    }
+
+    /**
+     * 木桩旋转
+     */
+    // time interval的间隔，数值越小转的越快
+    private rate: number = 35;
+    // 改变现有旋转速度
+    private rateOffset: number = 0;
+    private rotations: number = 3;
+    private insertRotare: itemObj[] = [];
+    private rotateThumb(random?: number) {
+        const { stage }  = egret.MainContext.instance;
+        const rotate = typeof random === 'number' ? random : this.timber.rotation;
+        // 存储木桩上 飞镖坐标
+        const range = [];
+
+        // 生成基础版 飞镖
+        const dart: egret.Bitmap = this.createBitmapByName('kunai_png');
+        dart.anchorOffsetX = 5;
+        dart.anchorOffsetY = -52;
+        dart.x = stage.stageWidth / 2;
+        dart.y = 230;
+        dart.width = this.dartW;
+        dart.height = this.dartH;
+        // this.addChildAt: 某一个显示对象添加到一个指定深度;深度值为0，为了让飞镖图案低于木桩图
+        this.addChildAt(dart, 0);
+        // 让飞镖旋转
+        const time: number = setInterval(() => {
+            dart.rotation += this.rotations;
+        }, this.rate - this.rateOffset);
+
+        const obj = {
+            id: this.timber.rotation,
+            range,
+            dart,
+            time
+        }
+        this.insertRotare.push(obj);
     }
 
     /**

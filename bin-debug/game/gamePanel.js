@@ -43,7 +43,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// 游戏界面
 var gamePanel = (function (_super) {
     __extends(gamePanel, _super);
     function gamePanel() {
@@ -57,6 +56,15 @@ var gamePanel = (function (_super) {
         _this.level = 1;
         _this.mode = 1;
         _this.dartNum = 9;
+        /**
+         * 木桩旋转
+         */
+        // time interval的间隔，数值越小转的越快
+        _this.rate = 35;
+        // 改变现有旋转速度
+        _this.rateOffset = 0;
+        _this.rotations = 3;
+        _this.insertRotare = [];
         _this.initGame();
         return _this;
     }
@@ -115,10 +123,49 @@ var gamePanel = (function (_super) {
                         this.timber.y = 230;
                         this.createText();
                         this.createDart();
+                        this.dartNumArea();
                         return [2 /*return*/];
                 }
             });
         });
+    };
+    /**
+     * 绘制飞镖
+     * @param dart
+     * @param width
+     * @param height
+     * @param x
+     * @param y
+     */
+    gamePanel.prototype.drawDart = function (dart, width, height, x, y) {
+        dart.width = width;
+        dart.height = height;
+        dart.x = x;
+        dart.y = y;
+    };
+    gamePanel.prototype.drawText = function (x, y, color, size, align, update) {
+        if (update === void 0) { update = false; }
+        var txt = new egret.TextField();
+        this.addChild(txt);
+        txt.x = x;
+        txt.y = y;
+        txt.textColor = color;
+        txt.textAlign = align;
+        txt.size = size;
+        if (update)
+            txt.text = "x " + this.dartNum;
+    };
+    /**
+     * 绘制剩余飞镖数 框
+     */
+    gamePanel.prototype.dartNumArea = function () {
+        var dart = this.createBitmapByName('kunai_png');
+        this.drawDart(dart, 10, 50, 30, GameUtil.getStageHeight() - 100);
+        this.addChild(dart);
+        this.drawText(50, GameUtil.getStageHeight() - 80, 0xffffff, 14, egret.HorizontalAlign.LEFT, true);
+    };
+    gamePanel.prototype.updateDartNum = function () {
+        this.dartNumTip.text = "x " + this.dartNum;
     };
     gamePanel.prototype.skinConf = function (res, alpha, timberRes, timberW) {
         var bgimg = this.bgimg;
@@ -161,6 +208,7 @@ var gamePanel = (function (_super) {
         dart.x = stage.width / 2 - 10;
         dart.y = stage.height - 170;
         this.randomDart();
+        // TODO: 点击
     };
     gamePanel.prototype.randomDart = function () {
         if (this.level === 1)
@@ -171,14 +219,52 @@ var gamePanel = (function (_super) {
                 var random = Math.round(Math.random() * this.level);
                 if (random >= this.level / 2)
                     this.dartNum -= Math.floor(Math.random() * this.level / 2 + 1);
-                // TODO: rotate
+                this.dartInThumb(random);
                 break;
             case 2:
                 // 疯狂模式，每过一关，木桩上的飞镖多一把
-                for (var i = 1; i < this.level; i++) {
-                }
+                this.dartInThumb(this.level);
                 break;
         }
+    };
+    /**
+     * 随机性 生成飞镖位置
+     */
+    gamePanel.prototype.dartInThumb = function (length) {
+        for (var i = 1; i < length; i++) {
+            // 更加随机性 生成飞镖位置
+            var random = Math.floor(Math.random() * 180);
+            random = Math.random() < 0.5 ? random * -1 : random;
+            this.rotateThumb(random);
+        }
+    };
+    gamePanel.prototype.rotateThumb = function (random) {
+        var _this = this;
+        var stage = egret.MainContext.instance.stage;
+        var rotate = typeof random === 'number' ? random : this.timber.rotation;
+        // 存储木桩上 飞镖坐标
+        var range = [];
+        // 生成基础版 飞镖
+        var dart = this.createBitmapByName('kunai_png');
+        dart.anchorOffsetX = 5;
+        dart.anchorOffsetY = -52;
+        dart.x = stage.stageWidth / 2;
+        dart.y = 230;
+        dart.width = this.dartW;
+        dart.height = this.dartH;
+        // this.addChildAt: 某一个显示对象添加到一个指定深度;深度值为0，为了让飞镖图案低于木桩图
+        this.addChildAt(dart, 0);
+        // 让飞镖旋转
+        var time = setInterval(function () {
+            dart.rotation += _this.rotations;
+        }, this.rate - this.rateOffset);
+        var obj = {
+            id: this.timber.rotation,
+            range: range,
+            dart: dart,
+            time: time
+        };
+        this.insertRotare.push(obj);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

@@ -15,6 +15,7 @@
 		"bin-debug/game/components/bottomPart.js",
 		"bin-debug/game/components/buttons.js",
 		"bin-debug/game/tool/AssetAdapter.js",
+		"bin-debug/game/tool/GameUtil.js",
 		"bin-debug/game/tool/LoadingUI.js",
 		"bin-debug/game/tool/Platform.js",
 		"bin-debug/game/tool/ThemeAdapter.js"
